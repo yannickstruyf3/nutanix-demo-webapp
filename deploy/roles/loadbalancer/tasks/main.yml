@@ -1,0 +1,22 @@
+---
+- name: Fetching app servers
+  set_fact:
+    app_servers: "{{ app_servers_string.split(',') }}"
+- name: "Installing haproxy"
+  yum:
+    name: [
+        'haproxy'
+        ]
+    state: present
+    update_cache: yes
+
+- name: "Configure HA proxy"
+  template:
+    src: haproxy.cfg.j2
+    dest: /etc/haproxy/haproxy.cfg
+    newline_sequence: '\r\n'
+
+- name: Start HA proxy 
+  service:
+    name: haproxy
+    state: restarted

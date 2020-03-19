@@ -1,0 +1,7 @@
+---
+- hosts: localhost
+  vars: 
+    destination_language: "dutch"
+    customer: "MyCustomer"
+  roles:
+    - role: "{{ role }}"
