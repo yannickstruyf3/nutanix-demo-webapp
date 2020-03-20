@@ -1,0 +1,11 @@
+---
+- name: Install EPEL and GIT Yum packages
+  yum:
+    name:
+      - epel-release
+      - git
+    state: present
+- name: Install Python Pip Yum packages
+  yum:
+      name: python-pip
+      state: present

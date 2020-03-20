@@ -1,19 +1,5 @@
 ---
-- name: install requirements
-  pip:
-    requirements: /app/app/requirements.txt
-- name: write config file
-  template:
-    src: config.json.j2
-    dest: /app/app/config.json
-    newline_sequence: '\r\n'
-  when: destination_language is defined
-
-- name: start app
-  shell: "(python /app/app/main.py >/dev/null 2>&1 &)"
-  async: 10
-  poll: 0
-  register: output
-- name: "Start Application output"
-  debug: 
-    msg: "{{ output }}"
+- name: Install required packages
+  import_tasks: packages.yml
+- name: Run application
+  import_tasks: app.yml

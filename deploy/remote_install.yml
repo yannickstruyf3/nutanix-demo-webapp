@@ -1,0 +1,25 @@
+---
+  - hosts: localhost
+    tasks:
+      - name: "Waiting for SSH on {{target_host}}"
+        wait_for:
+          port: 22
+          host: "{{target_host}}"
+          search_regex: OpenSSH
+          delay: 5
+          timeout: 10
+        connection: local
+  - hosts: "{{target_host}}"
+    vars: 
+      ansible_user: automation
+      ansible_become: true
+      destination_language: "english"
+      customer: "Demo"
+      role: "app"
+    pre_tasks:
+      - name: Copy application files
+        copy:
+          src: "{{playbook_dir}}/../app"
+          dest: /app/
+    roles:
+      - role: "{{ role }}"
